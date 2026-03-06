@@ -1,46 +1,39 @@
 <!DOCTYPE html>
 <html>
 <head>
-
-<title>CRM Corretora</title>
+<meta charset="UTF-8">
+<title>Relatório de Leads</title>
 
 <style>
 
 body{
-background:#0b0f1a;
 font-family:Arial;
-color:white;
-display:flex;
-justify-content:center;
-align-items:center;
-height:100vh;
-}
-
-.container{
-background:#111827;
+background:#f2f2f2;
 padding:40px;
-border-radius:12px;
-width:400px;
 }
 
-input,select{
+.box{
+background:white;
+padding:30px;
+border-radius:10px;
+max-width:600px;
+margin:auto;
+}
+
+input,select,textarea{
 width:100%;
 padding:10px;
 margin-top:10px;
-background:#1f2937;
-border:none;
-color:white;
 }
 
 button{
 margin-top:20px;
-width:100%;
-padding:12px;
-background:#2563eb;
-border:none;
+padding:15px;
+background:#0070f3;
 color:white;
-font-weight:bold;
-cursor:pointer;
+border:none;
+width:100%;
+font-size:16px;
 }
 
 </style>
@@ -49,34 +42,45 @@ cursor:pointer;
 
 <body>
 
-<div class="container">
+<div class="box">
 
 <h2>Relatório de Atendimento</h2>
 
-<select id="atendente">
-<option>João</option>
-<option>Maria</option>
-<option>Carlos</option>
-</select>
+<input id="consultor" placeholder="Consultor">
 
 <input id="lead" placeholder="Nome do Lead">
 
 <input id="telefone" placeholder="Telefone">
 
-<input id="produto" placeholder="Produto">
-
-<input id="etapa" placeholder="Etapa da conversa">
-
-<input id="motivo" placeholder="Motivo da perda">
-
-<input id="observacao" placeholder="Observação">
-
-<select id="vendeu">
-<option>Não</option>
-<option>Sim</option>
+<select id="produto">
+<option>Seguro Auto</option>
+<option>Seguro Vida</option>
+<option>Plano Saúde</option>
 </select>
 
-<button onclick="enviar()">Enviar Relatório</button>
+<select id="etapa">
+<option>Não respondeu</option>
+<option>Primeiro contato</option>
+<option>Cotação enviada</option>
+<option>Negociação</option>
+<option>Fechado</option>
+</select>
+
+<select id="vendeu">
+<option>Sim</option>
+<option>Não</option>
+</select>
+
+<select id="motivo">
+<option>Preço</option>
+<option>Sem interesse</option>
+<option>Já possui seguro</option>
+<option>Não respondeu</option>
+</select>
+
+<textarea id="obs" placeholder="Observação"></textarea>
+
+<button onclick="enviar()">Enviar</button>
 
 </div>
 
@@ -84,27 +88,23 @@ cursor:pointer;
 
 function enviar(){
 
-const dados = {
-
-atendente:document.getElementById("atendente").value,
-lead:document.getElementById("lead").value,
-telefone:document.getElementById("telefone").value,
-produto:document.getElementById("produto").value,
-etapa:document.getElementById("etapa").value,
-motivo:document.getElementById("motivo").value,
-observacao:document.getElementById("observacao").value,
-vendeu:document.getElementById("vendeu").value
-
+const data = {
+consultor: document.getElementById("consultor").value,
+lead: document.getElementById("lead").value,
+telefone: document.getElementById("telefone").value,
+produto: document.getElementById("produto").value,
+etapa: document.getElementById("etapa").value,
+motivo: document.getElementById("motivo").value,
+obs: document.getElementById("obs").value,
+vendeu: document.getElementById("vendeu").value
 }
 
-fetch("https://script.google.com/macros/s/AKfycbyXQl2-uxsir6jGANRehe57eYHnWsZVgv2m98FZR0QqnrzgFYc4_T2EwXZjJjfmYvmQTA/exec",{
+fetch("https://script.google.com/macros/s/AKfycbzdgrkUBA2jMp9rHrvZkxrRXEphv5eX9itrzSbw43lV_oYabEjfcQvVJa27jmxMGN5YWg/exec",{
 method:"POST",
-body:JSON.stringify(dados)
+body:JSON.stringify(data)
 })
-.then(res=>res.json())
-.then(data=>{
-alert("Relatório enviado com sucesso!")
-})
+
+alert("Relatório enviado!")
 
 }
 
