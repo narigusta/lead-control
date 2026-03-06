@@ -17,191 +17,132 @@ box-sizing:border-box;
 }
 
 body{
-
 background: radial-gradient(circle at top, #0f172a, #020617);
 font-family: 'Orbitron', sans-serif;
 height:100vh;
 display:flex;
 align-items:center;
 justify-content:center;
-
 }
 
 /* CONTAINER */
 
 .container{
-
 background: rgba(15,23,42,0.9);
 border:1px solid #00f2ff;
 box-shadow:0 0 30px #00f2ff55;
-
 padding:40px;
 border-radius:12px;
-
 width:420px;
-
 }
 
 h1{
-
 color:#00f2ff;
 text-align:center;
 margin-bottom:25px;
 text-shadow:0 0 10px #00f2ff;
-
 }
 
 label{
-
 color:#a5f3fc;
 font-size:13px;
 margin-top:10px;
 display:block;
-
 }
 
 input{
-
 width:100%;
 padding:12px;
-
 margin-top:5px;
 margin-bottom:12px;
-
 background:#020617;
 border:1px solid #00f2ff;
-
 color:white;
-
 border-radius:6px;
-
 }
 
 input:focus{
-
 outline:none;
 box-shadow:0 0 10px #00f2ff;
-
 }
 
 /* BOTÃO */
 
 button{
-
 width:100%;
 padding:14px;
-
 margin-top:10px;
-
 border:none;
 border-radius:6px;
-
 background:linear-gradient(90deg,#00f2ff,#a855f7);
-
 color:white;
 font-size:15px;
 font-weight:600;
-
 cursor:pointer;
-
 transition:0.3s;
-
 }
 
 button:hover{
-
 box-shadow:0 0 15px #00f2ff;
 transform:scale(1.03);
-
 }
 
-/* POPUP SUCESSO */
+/* POPUP */
 
 .popup{
-
 position:fixed;
 top:0;
 left:0;
-
 width:100%;
 height:100%;
-
 background:rgba(0,0,0,0.8);
-
 display:none;
-
 align-items:center;
 justify-content:center;
-
 z-index:1000;
-
 }
 
 .popup-box{
-
 background:#020617;
-
 border:1px solid #00f2ff;
-
 box-shadow:0 0 25px #00f2ff;
-
 padding:40px;
-
 border-radius:10px;
-
 text-align:center;
-
 color:#00f2ff;
-
 }
 
 .popup-box h2{
-
 margin-bottom:20px;
-
 }
 
 /* NOTIFICAÇÃO */
 
 .notification{
-
 position:fixed;
 top:30px;
 right:30px;
-
 background:#020617;
 border:1px solid #ff2d75;
-
 color:#ff2d75;
-
 padding:15px 25px;
-
 border-radius:6px;
-
 box-shadow:0 0 15px #ff2d75;
-
 display:none;
-
 z-index:2000;
-
 animation:fadeIn 0.3s;
-
 }
 
 @keyframes fadeIn{
-
 from{opacity:0; transform:translateY(-10px);}
 to{opacity:1; transform:translateY(0);}
-
 }
 
 .footer{
-
 margin-top:15px;
 text-align:center;
 font-size:11px;
 color:#64748b;
-
 }
 
 </style>
@@ -231,7 +172,7 @@ Sistema interno
 
 </div>
 
-<!-- POPUP SUCESSO -->
+<!-- POPUP -->
 
 <div id="popup" class="popup">
 
@@ -248,9 +189,7 @@ Sistema interno
 <!-- NOTIFICAÇÃO -->
 
 <div id="notification" class="notification">
-
 Preencha todos os campos antes de enviar
-
 </div>
 
 <script>
@@ -261,8 +200,6 @@ let consultor = document.getElementById("consultor").value.trim();
 let lead = document.getElementById("lead").value.trim();
 let telefone = document.getElementById("telefone").value.trim();
 
-/* VALIDAÇÃO */
-
 if(!consultor || !lead || !telefone){
 
 mostrarNotificacao();
@@ -270,33 +207,35 @@ return;
 
 }
 
-const data = {
+/* FORM DATA */
 
-consultor:consultor,
-lead:lead,
-telefone:telefone
+const formData = new FormData();
 
-};
+formData.append("consultor", consultor);
+formData.append("lead", lead);
+formData.append("telefone", telefone);
 
 /* ENVIO */
 
-fetch("https://script.google.com/macros/s/AKfycbzFzwN2F8JFHOlDLmXieL6qJglAE5ZXydqUAt-nynYl1tEtbmOVwrfwKWo6d10Bs5RB/exec",{
+fetch("https://script.google.com/macros/s/AKfycbzFzwN2F8JFHOlDLmXieL6qJglAE5ZXydqUAt-nynYl1tEtbmOVwrfwKWo6d10Bs5RB/exec", {
 
-method:"POST",
-
-headers:{
-"Content-Type":"application/json"
-},
-
-body:JSON.stringify(data)
+method: "POST",
+mode: "no-cors",
+body: formData
 
 })
 
-.then(()=>{
+.then(() => {
 
 document.getElementById("popup").style.display="flex";
 
 })
+
+.catch(() => {
+
+alert("Erro ao enviar");
+
+});
 
 }
 
