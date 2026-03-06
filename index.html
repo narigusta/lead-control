@@ -1,106 +1,46 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="UTF-8">
 
-<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600&family=Poppins:wght@300;400;500&display=swap" rel="stylesheet">
+<title>CRM Corretora</title>
 
 <style>
 
 body{
-margin:0;
-font-family:'Poppins',sans-serif;
-background: radial-gradient(circle at top,#0b1a2a,#000814);
+background:#0b0f1a;
+font-family:Arial;
 color:white;
-}
-
-.topbar{
-background:#020617;
-padding:20px;
-text-align:center;
-border-bottom:1px solid #0ea5e9;
-}
-
-.topbar h1{
-font-family:'Orbitron',sans-serif;
-letter-spacing:2px;
-font-size:22px;
-margin:0;
-color:#38bdf8;
-}
-
-.topbar p{
-margin:4px 0 0 0;
-font-size:12px;
-opacity:0.7;
+display:flex;
+justify-content:center;
+align-items:center;
+height:100vh;
 }
 
 .container{
-max-width:480px;
-margin:40px auto;
-background:rgba(10,20,40,0.7);
-backdrop-filter:blur(10px);
-padding:30px;
-border-radius:14px;
-border:1px solid rgba(56,189,248,0.2);
-box-shadow:0 0 30px rgba(56,189,248,0.15);
+background:#111827;
+padding:40px;
+border-radius:12px;
+width:400px;
 }
 
-label{
-font-size:13px;
-color:#94a3b8;
-}
-
-input,select,textarea{
+input,select{
 width:100%;
-padding:11px;
-margin-top:6px;
-margin-bottom:16px;
-background:#020617;
-border:1px solid #1e293b;
-border-radius:6px;
+padding:10px;
+margin-top:10px;
+background:#1f2937;
+border:none;
 color:white;
-font-size:14px;
-}
-
-input:focus,select:focus,textarea:focus{
-outline:none;
-border:1px solid #38bdf8;
-box-shadow:0 0 8px #38bdf8;
-}
-
-textarea{
-height:80px;
-resize:none;
 }
 
 button{
+margin-top:20px;
 width:100%;
-padding:14px;
+padding:12px;
+background:#2563eb;
 border:none;
-border-radius:8px;
-background:linear-gradient(90deg,#0ea5e9,#2563eb);
 color:white;
-font-size:15px;
-font-weight:500;
+font-weight:bold;
 cursor:pointer;
-transition:0.3s;
-}
-
-button:hover{
-box-shadow:0 0 20px #0ea5e9;
-transform:translateY(-2px);
-}
-
-.sucesso{
-display:none;
-margin-top:15px;
-text-align:center;
-background:#052e16;
-padding:10px;
-border-radius:6px;
-color:#4ade80;
-font-size:14px;
 }
 
 </style>
@@ -109,64 +49,34 @@ font-size:14px;
 
 <body>
 
-<div class="topbar">
-
-<h1>CORRETORA • PAINEL</h1>
-<p>Sistema interno de atendimento</p>
-
-</div>
-
 <div class="container">
 
-<label>Atendente</label>
+<h2>Relatório de Atendimento</h2>
+
 <select id="atendente">
 <option>João</option>
 <option>Maria</option>
 <option>Carlos</option>
-<option>Ana</option>
 </select>
 
-<label>Nome do Lead</label>
-<input id="lead">
+<input id="lead" placeholder="Nome do Lead">
 
-<label>Telefone</label>
-<input id="telefone">
+<input id="telefone" placeholder="Telefone">
 
-<label>Produto</label>
-<select id="produto">
-<option>Seguro Auto</option>
-<option>Seguro Vida</option>
-<option>Seguro Residencial</option>
-<option>Plano de Saúde</option>
-<option>Consórcio</option>
-</select>
+<input id="produto" placeholder="Produto">
 
-<label>Etapa da Conversa</label>
-<select id="etapa">
-<option>Não respondeu</option>
-<option>Pediu proposta</option>
-<option>Em negociação</option>
-<option>Recusou</option>
-<option>Fechou</option>
-</select>
+<input id="etapa" placeholder="Etapa da conversa">
 
-<label>Motivo da perda</label>
-<input id="motivo">
+<input id="motivo" placeholder="Motivo da perda">
 
-<label>Observação</label>
-<textarea id="obs"></textarea>
+<input id="observacao" placeholder="Observação">
 
-<label>Vendeu?</label>
 <select id="vendeu">
-<option>Sim</option>
 <option>Não</option>
+<option>Sim</option>
 </select>
 
 <button onclick="enviar()">Enviar Relatório</button>
-
-<div class="sucesso" id="sucesso">
-✔ Relatório enviado com sucesso
-</div>
 
 </div>
 
@@ -174,22 +84,27 @@ font-size:14px;
 
 function enviar(){
 
-var dados = {
+const dados = {
 
-atendente: document.getElementById("atendente").value,
-lead: document.getElementById("lead").value,
-telefone: document.getElementById("telefone").value,
-produto: document.getElementById("produto").value,
-etapa: document.getElementById("etapa").value,
-motivo: document.getElementById("motivo").value,
-obs: document.getElementById("obs").value,
-vendeu: document.getElementById("vendeu").value
+atendente:document.getElementById("atendente").value,
+lead:document.getElementById("lead").value,
+telefone:document.getElementById("telefone").value,
+produto:document.getElementById("produto").value,
+etapa:document.getElementById("etapa").value,
+motivo:document.getElementById("motivo").value,
+observacao:document.getElementById("observacao").value,
+vendeu:document.getElementById("vendeu").value
 
-};
+}
 
-google.script.run.salvarDados(dados);
-
-document.getElementById("sucesso").style.display="block";
+fetch("https://script.google.com/macros/s/AKfycbyXQl2-uxsir6jGANRehe57eYHnWsZVgv2m98FZR0QqnrzgFYc4_T2EwXZjJjfmYvmQTA/exec",{
+method:"POST",
+body:JSON.stringify(dados)
+})
+.then(res=>res.json())
+.then(data=>{
+alert("Relatório enviado com sucesso!")
+})
 
 }
 
