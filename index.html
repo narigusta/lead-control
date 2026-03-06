@@ -4,7 +4,7 @@
 <head>
 
 <meta charset="UTF-8">
-<title>Painel de Atendimento</title>
+<title>Painel de Leads</title>
 
 <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600&display=swap" rel="stylesheet">
 
@@ -27,10 +27,11 @@ justify-content:center;
 
 }
 
+/* CONTAINER */
+
 .container{
 
-background: rgba(15,23,42,0.85);
-backdrop-filter: blur(10px);
+background: rgba(15,23,42,0.9);
 border:1px solid #00f2ff;
 box-shadow:0 0 30px #00f2ff55;
 
@@ -83,6 +84,8 @@ box-shadow:0 0 10px #00f2ff;
 
 }
 
+/* BOTÃO */
+
 button{
 
 width:100%;
@@ -108,8 +111,87 @@ transition:0.3s;
 button:hover{
 
 box-shadow:0 0 15px #00f2ff;
-
 transform:scale(1.03);
+
+}
+
+/* POPUP SUCESSO */
+
+.popup{
+
+position:fixed;
+top:0;
+left:0;
+
+width:100%;
+height:100%;
+
+background:rgba(0,0,0,0.8);
+
+display:none;
+
+align-items:center;
+justify-content:center;
+
+z-index:1000;
+
+}
+
+.popup-box{
+
+background:#020617;
+
+border:1px solid #00f2ff;
+
+box-shadow:0 0 25px #00f2ff;
+
+padding:40px;
+
+border-radius:10px;
+
+text-align:center;
+
+color:#00f2ff;
+
+}
+
+.popup-box h2{
+
+margin-bottom:20px;
+
+}
+
+/* NOTIFICAÇÃO */
+
+.notification{
+
+position:fixed;
+top:30px;
+right:30px;
+
+background:#020617;
+border:1px solid #ff2d75;
+
+color:#ff2d75;
+
+padding:15px 25px;
+
+border-radius:6px;
+
+box-shadow:0 0 15px #ff2d75;
+
+display:none;
+
+z-index:2000;
+
+animation:fadeIn 0.3s;
+
+}
+
+@keyframes fadeIn{
+
+from{opacity:0; transform:translateY(-10px);}
+to{opacity:1; transform:translateY(0);}
 
 }
 
@@ -141,7 +223,7 @@ color:#64748b;
 <label>Telefone</label>
 <input id="telefone" placeholder="Telefone">
 
-<button onclick="enviar()">Registrar Atendimento</button>
+<button onclick="enviar()">Enviar Relatório</button>
 
 <div class="footer">
 Sistema interno
@@ -149,34 +231,100 @@ Sistema interno
 
 </div>
 
+<!-- POPUP SUCESSO -->
+
+<div id="popup" class="popup">
+
+<div class="popup-box">
+
+<h2>As informações foram salvas</h2>
+
+<button onclick="fecharPopup()">Criar mais</button>
+
+</div>
+
+</div>
+
+<!-- NOTIFICAÇÃO -->
+
+<div id="notification" class="notification">
+
+Preencha todos os campos antes de enviar
+
+</div>
+
 <script>
 
 function enviar(){
 
+let consultor = document.getElementById("consultor").value.trim();
+let lead = document.getElementById("lead").value.trim();
+let telefone = document.getElementById("telefone").value.trim();
+
+/* VALIDAÇÃO */
+
+if(!consultor || !lead || !telefone){
+
+mostrarNotificacao();
+return;
+
+}
+
 const data = {
 
-consultor:document.getElementById("consultor").value,
-lead:document.getElementById("lead").value,
-telefone:document.getElementById("telefone").value
+consultor:consultor,
+lead:lead,
+telefone:telefone
 
 };
 
-fetch("https://script.google.com/macros/s/AKfycbzFzwN2F8JFHOlDLmXieL6qJglAE5ZXydqUAt-nynYl1tEtbmOVwrfwKWo6d10Bs5RB/exec",{
+/* ENVIO */
+
+fetch("SUA_URL_DO_SCRIPT",{
 
 method:"POST",
+
+headers:{
+"Content-Type":"application/json"
+},
+
 body:JSON.stringify(data)
 
 })
 
 .then(()=>{
 
-alert("Atendimento registrado!");
+document.getElementById("popup").style.display="flex";
+
+})
+
+}
+
+/* FECHAR POPUP */
+
+function fecharPopup(){
+
+document.getElementById("popup").style.display="none";
 
 document.getElementById("consultor").value="";
 document.getElementById("lead").value="";
 document.getElementById("telefone").value="";
 
-})
+}
+
+/* NOTIFICAÇÃO */
+
+function mostrarNotificacao(){
+
+let notif = document.getElementById("notification");
+
+notif.style.display="block";
+
+setTimeout(()=>{
+
+notif.style.display="none";
+
+},3000);
 
 }
 
