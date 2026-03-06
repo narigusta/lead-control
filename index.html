@@ -1,39 +1,125 @@
 <!DOCTYPE html>
-<html>
+<html lang="pt-br">
+
 <head>
+
 <meta charset="UTF-8">
-<title>Relatório de Leads</title>
+<title>Painel de Atendimento</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600&display=swap" rel="stylesheet">
 
 <style>
 
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+}
+
 body{
-font-family:Arial;
-background:#f2f2f2;
+
+background: radial-gradient(circle at top, #0f172a, #020617);
+font-family: 'Orbitron', sans-serif;
+height:100vh;
+display:flex;
+align-items:center;
+justify-content:center;
+
+}
+
+.container{
+
+background: rgba(15,23,42,0.85);
+backdrop-filter: blur(10px);
+border:1px solid #00f2ff;
+box-shadow:0 0 30px #00f2ff55;
+
 padding:40px;
+border-radius:12px;
+
+width:420px;
+
 }
 
-.box{
-background:white;
-padding:30px;
-border-radius:10px;
-max-width:600px;
-margin:auto;
+h1{
+
+color:#00f2ff;
+text-align:center;
+margin-bottom:25px;
+text-shadow:0 0 10px #00f2ff;
+
 }
 
-input,select,textarea{
-width:100%;
-padding:10px;
+label{
+
+color:#a5f3fc;
+font-size:13px;
 margin-top:10px;
+display:block;
+
+}
+
+input{
+
+width:100%;
+padding:12px;
+
+margin-top:5px;
+margin-bottom:12px;
+
+background:#020617;
+border:1px solid #00f2ff;
+
+color:white;
+
+border-radius:6px;
+
+}
+
+input:focus{
+
+outline:none;
+box-shadow:0 0 10px #00f2ff;
+
 }
 
 button{
-margin-top:20px;
-padding:15px;
-background:#0070f3;
-color:white;
-border:none;
+
 width:100%;
-font-size:16px;
+padding:14px;
+
+margin-top:10px;
+
+border:none;
+border-radius:6px;
+
+background:linear-gradient(90deg,#00f2ff,#a855f7);
+
+color:white;
+font-size:15px;
+font-weight:600;
+
+cursor:pointer;
+
+transition:0.3s;
+
+}
+
+button:hover{
+
+box-shadow:0 0 15px #00f2ff;
+
+transform:scale(1.03);
+
+}
+
+.footer{
+
+margin-top:15px;
+text-align:center;
+font-size:11px;
+color:#64748b;
+
 }
 
 </style>
@@ -42,45 +128,24 @@ font-size:16px;
 
 <body>
 
-<div class="box">
+<div class="container">
 
-<h2>Relatório de Atendimento</h2>
+<h1>Painel de Leads</h1>
 
-<input id="consultor" placeholder="Consultor">
+<label>Consultor</label>
+<input id="consultor" placeholder="Nome do consultor">
 
-<input id="lead" placeholder="Nome do Lead">
+<label>Lead</label>
+<input id="lead" placeholder="Nome do cliente">
 
+<label>Telefone</label>
 <input id="telefone" placeholder="Telefone">
 
-<select id="produto">
-<option>Seguro Auto</option>
-<option>Seguro Vida</option>
-<option>Plano Saúde</option>
-</select>
+<button onclick="enviar()">Registrar Atendimento</button>
 
-<select id="etapa">
-<option>Não respondeu</option>
-<option>Primeiro contato</option>
-<option>Cotação enviada</option>
-<option>Negociação</option>
-<option>Fechado</option>
-</select>
-
-<select id="vendeu">
-<option>Sim</option>
-<option>Não</option>
-</select>
-
-<select id="motivo">
-<option>Preço</option>
-<option>Sem interesse</option>
-<option>Já possui seguro</option>
-<option>Não respondeu</option>
-</select>
-
-<textarea id="obs" placeholder="Observação"></textarea>
-
-<button onclick="enviar()">Enviar</button>
+<div class="footer">
+Sistema interno
+</div>
 
 </div>
 
@@ -89,22 +154,29 @@ font-size:16px;
 function enviar(){
 
 const data = {
-consultor: document.getElementById("consultor").value,
-lead: document.getElementById("lead").value,
-telefone: document.getElementById("telefone").value,
-produto: document.getElementById("produto").value,
-etapa: document.getElementById("etapa").value,
-motivo: document.getElementById("motivo").value,
-obs: document.getElementById("obs").value,
-vendeu: document.getElementById("vendeu").value
-}
 
-fetch("https://script.google.com/macros/s/AKfycbzdgrkUBA2jMp9rHrvZkxrRXEphv5eX9itrzSbw43lV_oYabEjfcQvVJa27jmxMGN5YWg/exec",{
+consultor:document.getElementById("consultor").value,
+lead:document.getElementById("lead").value,
+telefone:document.getElementById("telefone").value
+
+};
+
+fetch("https://script.google.com/macros/s/AKfycbzFzwN2F8JFHOlDLmXieL6qJglAE5ZXydqUAt-nynYl1tEtbmOVwrfwKWo6d10Bs5RB/exec",{
+
 method:"POST",
 body:JSON.stringify(data)
+
 })
 
-alert("Relatório enviado!")
+.then(()=>{
+
+alert("Atendimento registrado!");
+
+document.getElementById("consultor").value="";
+document.getElementById("lead").value="";
+document.getElementById("telefone").value="";
+
+})
 
 }
 
