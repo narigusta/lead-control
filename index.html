@@ -4,9 +4,11 @@
 <head>
 
 <meta charset="UTF-8">
-<title>Painel de Leads</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600&display=swap" rel="stylesheet">
+<title>Treinamento de Vendas</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
 
 <style>
 
@@ -14,135 +16,211 @@
 margin:0;
 padding:0;
 box-sizing:border-box;
+font-family:'Poppins', sans-serif;
 }
 
 body{
-background: radial-gradient(circle at top, #0f172a, #020617);
-font-family: 'Orbitron', sans-serif;
-height:100vh;
+
+min-height:100vh;
 display:flex;
 align-items:center;
 justify-content:center;
+text-align:center;
+color:white;
+padding:20px;
+overflow:hidden;
+
+background:
+radial-gradient(circle at 20% 30%, #1a4fff 0%, transparent 40%),
+radial-gradient(circle at 80% 70%, #0037a3 0%, transparent 40%),
+linear-gradient(180deg,#050f24,#0a1f44);
+
 }
 
-/* CONTAINER */
+/* CONTEÚDO */
 
 .container{
-background: rgba(15,23,42,0.9);
-border:1px solid #00f2ff;
-box-shadow:0 0 30px #00f2ff55;
-padding:40px;
-border-radius:12px;
-width:420px;
-}
-
-h1{
-color:#00f2ff;
-text-align:center;
-margin-bottom:25px;
-text-shadow:0 0 10px #00f2ff;
-}
-
-label{
-color:#a5f3fc;
-font-size:13px;
-margin-top:10px;
-display:block;
-}
-
-input{
+max-width:800px;
 width:100%;
-padding:12px;
-margin-top:5px;
-margin-bottom:12px;
-background:#020617;
-border:1px solid #00f2ff;
-color:white;
-border-radius:6px;
+position:relative;
+z-index:10;
+padding:20px;
 }
 
-input:focus{
-outline:none;
-box-shadow:0 0 10px #00f2ff;
+/* LOGO */
+
+.logo img{
+width:160px;
+max-width:70%;
+margin-bottom:40px;
+}
+
+/* HEADLINE */
+
+.headline{
+font-size:42px;
+font-weight:600;
+margin-bottom:20px;
+line-height:1.2;
+}
+
+/* SUB */
+
+.subheadline{
+font-size:18px;
+opacity:0.9;
+margin-bottom:40px;
+max-width:600px;
+margin-left:auto;
+margin-right:auto;
 }
 
 /* BOTÃO */
 
-button{
-width:100%;
-padding:14px;
-margin-top:10px;
-border:none;
-border-radius:6px;
-background:linear-gradient(90deg,#00f2ff,#a855f7);
+.cta-button{
+
+display:inline-block;
+padding:16px 42px;
+font-size:18px;
+border-radius:50px;
+text-decoration:none;
 color:white;
-font-size:15px;
-font-weight:600;
-cursor:pointer;
+
+background:#2a6bff;
+
+box-shadow:
+0 0 10px #2a6bff,
+0 0 20px #2a6bff;
+
 transition:0.3s;
+
 }
 
-button:hover{
-box-shadow:0 0 15px #00f2ff;
-transform:scale(1.03);
+.cta-button:hover{
+
+box-shadow:
+0 0 20px #2a6bff,
+0 0 40px #2a6bff,
+0 0 70px #2a6bff;
+
+transform:translateY(-2px);
+
 }
 
-/* POPUP */
-
-.popup{
-position:fixed;
-top:0;
-left:0;
-width:100%;
-height:100%;
-background:rgba(0,0,0,0.8);
-display:none;
-align-items:center;
-justify-content:center;
-z-index:1000;
+.motivacional{
+margin-top:50px;
+font-size:15px;
+opacity:0.85;
+font-style:italic;
+max-width:500px;
+margin-left:auto;
+margin-right:auto;
 }
 
-.popup-box{
-background:#020617;
-border:1px solid #00f2ff;
-box-shadow:0 0 25px #00f2ff;
-padding:40px;
+/* NOTIFICAÇÕES */
+
+.sale{
+
+position:absolute;
+background:white;
+color:#111;
+padding:15px 18px;
 border-radius:10px;
-text-align:center;
-color:#00f2ff;
+font-size:15px;
+font-weight:500;
+
+opacity:0.2;
+
+box-shadow:0 8px 25px rgba(0,0,0,0.25);
+
+animation:floatSale 10s linear infinite;
+
 }
 
-.popup-box h2{
-margin-bottom:20px;
+/* POSIÇÕES */
+
+.s1{left:5%; bottom:-50px; animation-delay:0s;}
+.s2{left:25%; bottom:-80px; animation-delay:5s;}
+.s3{right:10%; bottom:-60px; animation-delay:8s;}
+.s4{right:30%; bottom:-70px; animation-delay:10s;}
+.s5{left:45%; bottom:-90px; animation-delay:14s;}
+.s6{right:45%; bottom:-100px; animation-delay:16s;}
+
+@keyframes floatSale{
+
+0%{
+transform:translateY(0);
+opacity:0;
 }
 
-/* NOTIFICAÇÃO */
-
-.notification{
-position:fixed;
-top:30px;
-right:30px;
-background:#020617;
-border:1px solid #ff2d75;
-color:#ff2d75;
-padding:15px 25px;
-border-radius:6px;
-box-shadow:0 0 15px #ff2d75;
-display:none;
-z-index:2000;
-animation:fadeIn 0.3s;
+10%{
+opacity:0.2;
 }
 
-@keyframes fadeIn{
-from{opacity:0; transform:translateY(-10px);}
-to{opacity:1; transform:translateY(0);}
+90%{
+opacity:0.2;
 }
 
-.footer{
-margin-top:15px;
-text-align:center;
-font-size:11px;
-color:#64748b;
+100%{
+transform:translateY(-900px);
+opacity:0;
+}
+
+}
+
+/* MOBILE */
+
+@media(max-width:768px){
+
+.container{
+padding:10px;
+}
+
+.logo img{
+width:140px;
+}
+
+.headline{
+font-size:30px;
+}
+
+.subheadline{
+font-size:16px;
+margin-bottom:35px;
+}
+
+.cta-button{
+font-size:17px;
+padding:16px 30px;
+}
+
+.motivacional{
+font-size:14px;
+}
+
+}
+
+/* MOBILE PEQUENO */
+
+@media(max-width:420px){
+
+.headline{
+font-size:26px;
+}
+
+.subheadline{
+font-size:15px;
+}
+
+.logo img{
+width:120px;
+}
+
+.cta-button{
+width:90%;
+max-width:300px;
+}
+
 }
 
 </style>
@@ -151,123 +229,43 @@ color:#64748b;
 
 <body>
 
+<!-- NOTIFICAÇÕES DE VENDA -->
+
+<div class="sale s1">💲 Venda Realizada!</div>
+<div class="sale s2">✅ Vistoria aprovada!</div>
+<div class="sale s3">💲 Venda Realizada!</div>
+<div class="sale s4">💲 Cliente Fechou!</div>
+<div class="sale s5">💲 Venda Realizada!</div>
+<div class="sale s6">💲 Venda Confirmada!</div>
+
+<!-- CONTEÚDO PRINCIPAL -->
+
 <div class="container">
 
-<h1>Painel de Leads</h1>
-
-<label>Consultor</label>
-<input id="consultor" placeholder="Nome do consultor">
-
-<label>Lead</label>
-<input id="lead" placeholder="Nome do cliente">
-
-<label>Telefone</label>
-<input id="telefone" placeholder="Telefone">
-
-<button onclick="enviar()">Enviar Relatório</button>
-
-<div class="footer">
-Sistema interno
+<div class="logo">
+<img src="https://i.imgur.com/m0Rfd3K.png" alt="Logo">
 </div>
 
+<h1 class="headline">
+Qualquer pessoa pode se tornar um grande vendedor seguindo o método certo
+</h1>
+
+<p class="subheadline">
+Este treinamento foi criado para guiar você passo a passo.
+Se você seguir exatamente o que está no material e estudar todos os dias, suas vendas serão apenas consequência do processo.
+</p>
+
+<a href="COLOQUE_SEU_LINK_AQUI" class="cta-button">
+Acessar Treinamento
+</a>
+
+<p class="motivacional">
+Grandes vendedores não nascem prontos.
+Eles são construídos com disciplina, repetição e prática diária.
+</p>
+
 </div>
-
-<!-- POPUP -->
-
-<div id="popup" class="popup">
-
-<div class="popup-box">
-
-<h2>As informações foram salvas</h2>
-
-<button onclick="fecharPopup()">Criar mais</button>
-
-</div>
-
-</div>
-
-<!-- NOTIFICAÇÃO -->
-
-<div id="notification" class="notification">
-Preencha todos os campos antes de enviar
-</div>
-
-<script>
-
-function enviar(){
-
-let consultor = document.getElementById("consultor").value.trim();
-let lead = document.getElementById("lead").value.trim();
-let telefone = document.getElementById("telefone").value.trim();
-
-if(!consultor || !lead || !telefone){
-
-mostrarNotificacao();
-return;
-
-}
-
-/* FORM DATA */
-
-const formData = new FormData();
-
-formData.append("consultor", consultor);
-formData.append("lead", lead);
-formData.append("telefone", telefone);
-
-/* ENVIO */
-
-fetch("https://script.google.com/macros/s/AKfycbzFzwN2F8JFHOlDLmXieL6qJglAE5ZXydqUAt-nynYl1tEtbmOVwrfwKWo6d10Bs5RB/exec", {
-
-method: "POST",
-mode: "no-cors",
-body: formData
-
-})
-
-.then(() => {
-
-document.getElementById("popup").style.display="flex";
-
-})
-
-.catch(() => {
-
-alert("Erro ao enviar");
-
-});
-
-}
-
-/* FECHAR POPUP */
-
-function fecharPopup(){
-
-document.getElementById("popup").style.display="none";
-
-document.getElementById("consultor").value="";
-document.getElementById("lead").value="";
-document.getElementById("telefone").value="";
-
-}
-
-/* NOTIFICAÇÃO */
-
-function mostrarNotificacao(){
-
-let notif = document.getElementById("notification");
-
-notif.style.display="block";
-
-setTimeout(()=>{
-
-notif.style.display="none";
-
-},3000);
-
-}
-
-</script>
 
 </body>
+
 </html>
